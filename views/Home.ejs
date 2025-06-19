@@ -1,0 +1,23 @@
+<%- include('partials/header', { title: 'Register' }) %>
+
+<style>
+  .container {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+</style>
+
+<div class="container">
+  <h1>Welcome to Home Page</h1>
+
+  <% if (user) { %>
+    <h2>You are logged in</h2>
+  <% } else { %>
+    <h2>You are not logged in</h2>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
