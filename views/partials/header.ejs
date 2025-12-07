@@ -3,31 +3,73 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title %></title>
+  <title><%= title %> - Auth Master</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      background: #f4f4f4;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary-color: #8b5cf6;
+      --background: #f8fafc;
+      --surface: #ffffff;
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--background);
+      color: var(--text-primary);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      line-height: 1.6;
     }
 
     header {
-      background-color: #333;
-      color: white;
-      padding: 1rem;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: relative;
     }
 
     .logo {
       font-size: 1.5rem;
-      font-weight: bold;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      transform: translateY(-2px);
     }
 
     nav {
@@ -39,33 +81,74 @@
       padding: 0;
       margin: 0;
       display: flex;
+      gap: 0.5rem;
+      align-items: center;
     }
 
     nav ul li {
-      margin-left: 1rem;
+      margin: 0;
     }
 
     nav a {
-      color: white;
+      color: var(--text-secondary);
       text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      display: block;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    nav a.active {
+      color: var(--primary-color);
+      background: rgba(99, 102, 241, 0.1);
     }
 
     .hamburger {
       display: none;
       flex-direction: column;
       cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: var(--transition);
+    }
+
+    .hamburger:hover {
+      background: rgba(99, 102, 241, 0.1);
     }
 
     .hamburger span {
-      height: 3px;
-      width: 25px;
-      background: white;
-      margin: 4px 0;
-      transition: 0.3s ease;
+      height: 2px;
+      width: 24px;
+      background: var(--text-primary);
+      margin: 3px 0;
+      transition: var(--transition);
+      border-radius: 2px;
     }
 
-    /* Mobile styles */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
     @media (max-width: 768px) {
+      .header-container {
+        padding: 1rem 1.5rem;
+      }
+
       .hamburger {
         display: flex;
       }
@@ -74,10 +157,12 @@
         position: absolute;
         top: 100%;
         left: 0;
-        background-color: #333;
+        background: var(--surface);
         width: 100%;
         display: none;
         flex-direction: column;
+        box-shadow: var(--shadow-md);
+        border-top: 1px solid var(--border-color);
       }
 
       nav.active {
@@ -87,26 +172,32 @@
       nav ul {
         flex-direction: column;
         width: 100%;
+        gap: 0;
       }
 
       nav ul li {
-        margin: 0;
-        border-top: 1px solid #444;
         width: 100%;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      nav ul li:last-child {
+        border-bottom: none;
       }
 
       nav ul li a {
-        display: block;
-        padding: 1rem;
+        padding: 1rem 1.5rem;
         width: 100%;
+        border-radius: 0;
       }
     }
 
+    @media (max-width: 480px) {
+      .header-container {
+        padding: 0.875rem 1rem;
+      }
 
-
-    @media (max-width: 768px) {
-      .container {
-        padding: 10px;
+      .logo {
+        font-size: 1.25rem;
       }
     }
   </style>
@@ -114,37 +205,49 @@
 <body>
 
   <header>
-    <div class="logo">My Website</div>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+    <div class="header-container">
+      <div class="logo">Auth Master</div>
+      <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav id="nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <% if (user) { %>
+            <li><a href="/me">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+          <% } else { %>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/login">Login</a></li>
+          <% } %>
+        </ul>
+      </nav>
     </div>
-    <nav id="nav">
-      <ul>
-        <li><a href="/">Home</a></li>
-        
-        
-        <li><a href="/about">About</a></li>
-  <% if (user) { %>
-    <li><a href="/me">Profile</a></li>
-    <li><a href="/logout">Logout</a></li>
-  <% } else { %>
-    <li><a href="/register">Register</a></li>
-    <li><a href="/login">Login</a></li>
-  <% } %>
-      </ul>
-    </nav>
   </header>
-
-
-  </div>
 
   <script>
     function toggleMenu() {
       const nav = document.getElementById('nav');
+      const hamburger = document.getElementById('hamburger');
       nav.classList.toggle('active');
+      hamburger.classList.toggle('active');
     }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const nav = document.getElementById('nav');
+      const hamburger = document.getElementById('hamburger');
+      const isClickInsideNav = nav.contains(event.target);
+      const isClickInsideHamburger = hamburger.contains(event.target);
+      
+      if (!isClickInsideNav && !isClickInsideHamburger && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        hamburger.classList.remove('active');
+      }
+    });
   </script>
 
 </body>
