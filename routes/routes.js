@@ -2,6 +2,10 @@ import { Router } from "express";
 import { getLoginPage, getLogout, getRegisterPage, postLoginPage, postRegisterPage } from "../controllers/auth.controller.js";
 import { getAboutPage, getMe } from "../controllers/page.controller.js";
 import { protect } from "../middleware/protect.middleware.js";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 const router = Router()
 
 router.get('/register', getRegisterPage)
