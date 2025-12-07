@@ -1,23 +1,271 @@
-<%- include('partials/header', { title: 'Register' }) %>
+<%- include('partials/header', { title: 'Home' }) %>
 
 <style>
-  .container {
+  .hero-section {
+    flex: 1;
     display: flex;
-    height: 100vh;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  }
+
+  .hero-container {
+    max-width: 1280px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+
+  .status-logged-in {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .status-logged-out {
+    background: rgba(251, 146, 60, 0.1);
+    color: #ea580c;
+    border: 1px solid rgba(251, 146, 60, 0.2);
+  }
+
+  .status-icon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .status-logged-in .status-icon {
+    background: #16a34a;
+  }
+
+  .status-logged-out .status-icon {
+    background: #ea580c;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-secondary {
+    background: var(--surface);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+  }
+
+  .btn-secondary:hover {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    padding: 0 2rem;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+  }
+
+  .feature-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .features-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      padding: 0 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
   }
 </style>
 
-<div class="container">
-  <h1>Welcome to Home Page</h1>
+<div class="hero-section">
+  <div class="hero-container">
+    <div class="hero-content">
+      <% if (user) { %>
+        <div class="hero-status status-logged-in">
+          <span class="status-icon"></span>
+          You are logged in
+        </div>
+      <% } else { %>
+        <div class="hero-status status-logged-out">
+          <span class="status-icon"></span>
+          You are not logged in
+        </div>
+      <% } %>
 
-  <% if (user) { %>
-    <h2>You are logged in</h2>
-  <% } else { %>
-    <h2>You are not logged in</h2>
-  <% } %>
+      <h1 class="hero-title">Welcome to Auth Master</h1>
+      <p class="hero-subtitle">
+        A secure and modern authentication system built with Express and EJS. 
+        Experience seamless user management with enterprise-grade security.
+      </p>
+
+      <div class="cta-buttons">
+        <% if (user) { %>
+          <a href="/me" class="btn btn-primary">View Profile</a>
+          <a href="/logout" class="btn btn-secondary">Logout</a>
+        <% } else { %>
+          <a href="/register" class="btn btn-primary">Get Started</a>
+          <a href="/login" class="btn btn-secondary">Sign In</a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">Secure</h3>
+        <p class="feature-description">Industry-standard encryption and security practices protect your data</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3 class="feature-title">Fast</h3>
+        <p class="feature-description">Lightning-fast authentication with optimized performance</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3 class="feature-title">Simple</h3>
+        <p class="feature-description">Clean interface with intuitive user experience</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%- include('partials/footer') %>
